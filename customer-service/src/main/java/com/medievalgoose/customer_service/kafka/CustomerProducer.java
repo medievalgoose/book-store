@@ -1,5 +1,6 @@
 package com.medievalgoose.customer_service.kafka;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medievalgoose.customer_service.dtos.CustomerEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
@@ -24,13 +25,20 @@ public class CustomerProducer {
     }
 
     public void produceCustomerEvent(CustomerEvent customerEvent) {
-        Message<CustomerEvent> message = MessageBuilder
-                .withPayload(customerEvent)
-                .setHeader(KafkaHeaders.TOPIC, topic.name())
-                .build();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String customerEventString = objectMapper.writeValueAsString(customerEvent);
 
-        kafkaTemplate.send(message);
+            Message<String> message = MessageBuilder
+                    .withPayload(customerEventString)
+                    .setHeader(KafkaHeaders.TOPIC, topic.name())
+                    .build();
 
-        LOGGER.info(String.format("Customer event published => %s", customerEvent.toString()));
+            kafkaTemplate.send(message);
+
+            LOGGER.info(String.format("Customer event published => %s", customerEvent.toString()));
+        } catch (Exception ex) {
+            LOGGER.error("Serialize error");
+        }
     }
 }
