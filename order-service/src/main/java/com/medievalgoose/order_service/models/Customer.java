@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -18,4 +20,7 @@ public class Customer {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 }

@@ -3,6 +3,8 @@ package com.medievalgoose.order_service.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -16,4 +18,7 @@ public class PaymentMethod {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "paymentMethod")
+    private Set<Order> orders;
 }

@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class Order {
     private String guid;
 
     @Column(name = "timestamp")
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "customer_guid")
@@ -29,4 +31,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "payment_method_guid")
     private PaymentMethod paymentMethod;
+
+    @OneToMany(mappedBy = "order")
+    private Set<OrderProduct> orderProducts;
 }

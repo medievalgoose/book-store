@@ -21,7 +21,7 @@ public class ProductConsumer {
     }
 
     @KafkaListener(groupId = "${spring.kafka.consumer.group-id}",
-    topics = "${spring.kafka.topic.name}")
+    topics = "${spring.kafka.product.topic.name}")
     public void consumeProductEvent(String productEventString) {
         try {
             LOGGER.info(String.format("Product event consumed => %s", productEventString.toString()));
