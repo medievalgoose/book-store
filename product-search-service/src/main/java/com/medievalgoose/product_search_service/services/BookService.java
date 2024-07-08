@@ -9,6 +9,6 @@ import java.util.List;
 
 @Service
 public interface BookService {
-    List<Book> GetAllBooks(@Nullable String title, long priceLowerBound, long priceUpperBound);
+    List<Book> GetAllBooks(@Nullable String title, Long priceLowerBound, Long priceUpperBound);
     Book GetBook(String id);
 }

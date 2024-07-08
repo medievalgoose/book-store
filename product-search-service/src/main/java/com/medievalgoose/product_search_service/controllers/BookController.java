@@ -18,8 +18,8 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<?> GetAllBooks(@RequestParam(required = false) String title,
-                                         @RequestParam(required = false) long priceLowerBound,
-                                         @RequestParam(required = false) long priceUpperBound) {
+                                         @RequestParam(required = false) Long priceLowerBound,
+                                         @RequestParam(required = false) Long priceUpperBound) {
         return ResponseEntity.ok(bookService.GetAllBooks(title, priceLowerBound, priceUpperBound));
     }
 

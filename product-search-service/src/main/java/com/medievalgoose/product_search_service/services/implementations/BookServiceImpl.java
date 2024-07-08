@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> GetAllBooks(@Nullable String title, long priceLowerBound, long priceUpperBound) {
+    public List<Book> GetAllBooks(@Nullable String title, Long priceLowerBound, Long priceUpperBound) {
 
         Criteria criteria = new Criteria();
 
@@ -40,7 +40,13 @@ public class BookServiceImpl implements BookService {
             criteria =  criteria.and("title").contains(title);
         }
 
-        criteria =  criteria.and("price").between(priceLowerBound, priceUpperBound);
+        if (priceLowerBound != null) {
+            criteria = criteria.and("price").greaterThanEqual(priceLowerBound);
+        }
+
+        if (priceUpperBound != null) {
+            criteria =  criteria.and("price").lessThanEqual(priceUpperBound);
+        }
 
         Query query = new CriteriaQuery(criteria);
 
